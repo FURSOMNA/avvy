@@ -1,13 +1,12 @@
-name: redflare-dev-infisical
+name: avvy-dev-infisical
 
 services:
-  backend:
-    container_name: infisical-backend
-    restart: unless-stopped
+  avvy_infisical_backend:
+    container_name: avvy-infisical-backend
     depends_on:
-      db:
+      avvy_infisical_db:
         condition: service_healthy
-      redis:
+      avvy_infisical_redis:
         condition: service_started
     image: infisical/infisical:v0.162.18
     pull_policy: always
@@ -19,11 +18,10 @@ services:
     networks:
       - infisical
 
-  redis:
+  avvy_infisical_redis:
     image: redis
-    container_name: infisical-dev-redis
+    container_name: avvy-infisical-dev-redis
     env_file: .env
-    restart: always
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
@@ -31,10 +29,9 @@ services:
     volumes:
       - redis_data:/data
 
-  db:
-    container_name: infisical-db
+  avvy_infisical_db:
+    container_name: avvy-infisical-db
     image: postgres:14-alpine
-    restart: always
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data

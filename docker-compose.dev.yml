@@ -1,12 +1,12 @@
 name: avvy-dev-services
 
 services:
-  mongo:
+  avvy_mongo:
     image: mongo:8.3.8-noble
+    container_name: avvy-db
     hostname: mongodb
-    container_name: mongo
     ports:
-      - "27020:27017"
+      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=local
       - MONGO_INITDB_ROOT_PASSWORD=local
@@ -14,18 +14,10 @@ services:
     volumes:
       - ./.data/db:/data/db
 
-  rustfs_perms:
-    image: alpine
-    user: root
-    volumes:
-      - ./.data/storage:/fix_path
-    command: chown -R 10001:10001 /fix_path
-
-  rustfs:
+  avvy_rustfs:
     image: rustfs/rustfs:latest
-    depends_on:
-      rustfs_perms:
-        condition: service_completed_successfully
+    container_name: avvy-storage
+    user: "${UID:-1000}:${GID:-1000}"
     ports:
       - "9000:9000"
       - "9001:9001"
