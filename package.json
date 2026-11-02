@@ -6,6 +6,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:up": "./scripts/docker-dev.sh",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -32,7 +33,7 @@
     "lodash": "^4.17.21",
     "lru-cache": "^11.2.4",
     "mongodb": "^6.18.0",
-    "nuxt": "^4.4.8",
+    "nuxt": "^4.6.3",
     "nuxt-auth-utils": "0.5.20",
     "nuxt-shiki": "0.3.2",
     "pinia": "^3.0.3",
