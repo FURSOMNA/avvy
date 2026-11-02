@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. In every instance, agent should run @ponytail skill to avoid slop/unnecesary detail messages.
 
 ## Project overview
 
