@@ -31,7 +31,6 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/test-utils/module',
-    'nuxt-mcp-dev',
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/ui',
