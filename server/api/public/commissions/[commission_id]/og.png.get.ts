@@ -3,9 +3,6 @@ import sharp from 'sharp';
 import { CommissionStatusType } from '~~/shared/enums/Commissions';
 
 // Lazy-loaded font buffers — populated on first request via serverAssets
-// let _fontRegular: Buffer | null = null;
-// let _fontBold: Buffer | null = null;
-// let _logoSvg: Buffer | null = null;
 const assets = {} as Record<string, Buffer>;
 
 async function loadResources() {
@@ -17,10 +14,13 @@ async function loadResources() {
   assets.fontBold = Buffer.from(
     (await fontStorage.getItemRaw('Geist-Bold.ttf')) as Uint8Array,
   );
+  assets.fontMono = Buffer.from(
+    (await fontStorage.getItemRaw('AzeretMono-Regular.ttf')) as Uint8Array,
+  );
   // Load SVG assets as strings
   const svgStorage = useStorage('assets:svg');
   assets.logoSvg = Buffer.from(
-    (await svgStorage.getItem<string>('xa_logotype.svg')) as string,
+    (await svgStorage.getItem<string>('fursomna_logo.svg')) as string,
   );
   assets.userIconSvg = Buffer.from(
     (await svgStorage.getItem<string>('lucide-user_round.svg')) as string,
@@ -28,7 +28,7 @@ async function loadResources() {
   // Load images
   const imgStorage = useStorage('assets:img');
   assets.background = Buffer.from(
-    (await imgStorage.getItemRaw('REDFLARE.GENERIC_SEO_BG.jpg')) as Uint8Array,
+    (await imgStorage.getItemRaw('avvyGenericOgBg.jpg')) as Uint8Array,
   );
 }
 
@@ -45,19 +45,6 @@ const STATUS_LABELS: Partial<Record<CommissionStatusType, string>> = {
   [CommissionStatusType.Cancelled]: 'Cancelled',
 };
 
-const STATUS_COLORS: Partial<Record<CommissionStatusType, string>> = {
-  [CommissionStatusType.InSetup]: '#06b6d4',
-  [CommissionStatusType.NextUp]: '#3b82f6',
-  [CommissionStatusType.InDevelopment]: '#eab308',
-  [CommissionStatusType.AwaitingResponse]: '#f97316',
-  [CommissionStatusType.Showtime]: '#22c55e',
-  [CommissionStatusType.Maintenance]: '#a855f7',
-  [CommissionStatusType.Settled]: '#71717a',
-  [CommissionStatusType.Missing]: '#ef4444',
-  [CommissionStatusType.Backlog]: '#64748b',
-  [CommissionStatusType.Cancelled]: '#dc2626',
-};
-
 export default defineEventHandler(async (event) => {
   const { data: rawCommission } = await validateCommission(event, true, true);
   if (!rawCommission)
@@ -68,16 +55,12 @@ export default defineEventHandler(async (event) => {
 
   const status = commission.data.status as CommissionStatusType;
   const statusLabel = STATUS_LABELS[status] ?? 'Commission';
-  const statusColor = STATUS_COLORS[status] ?? '#71717a';
 
   const formattedDate = new Intl.DateTimeFormat('en-US', {
     dateStyle: 'long',
   }).format(new Date(commission.data.created_at as string));
 
-  // Replace "currentColor" in SVG with actual color for better compatibility with satori
-  const logoSvg = assets.logoSvg
-    ?.toString('utf-8')
-    .replace(/currentColor/g, '#06b6d4');
+  const logoSvg = assets.logoSvg?.toString('utf-8');
 
   const element = {
     type: 'div',
@@ -91,7 +74,7 @@ export default defineEventHandler(async (event) => {
         backgroundImage: `url(data:image/jpeg;base64,${assets.background?.toString('base64')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        padding: '60px',
+        padding: '4rem',
         fontFamily: 'Geist',
       },
       children: [
@@ -103,7 +86,7 @@ export default defineEventHandler(async (event) => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: '32px',
+              marginBottom: '2rem',
             },
             children: [
               {
@@ -119,12 +102,12 @@ export default defineEventHandler(async (event) => {
                   style: {
                     display: 'flex',
                     alignItems: 'center',
-                    border: `2px solid ${statusColor}`,
-                    color: statusColor,
+                    border: '2px solid #CDB9D2',
+                    color: '#CDB9D2',
                     padding: '6px 20px',
                     borderRadius: '9999px',
                     fontSize: '24px',
-                    fontWeight: 600,
+                    fontWeight: 700,
                   },
                   children: [statusLabel],
                 },
@@ -157,10 +140,11 @@ export default defineEventHandler(async (event) => {
                 type: 'span',
                 props: {
                   style: {
-                    color: '#818192',
+                    color: '#CDB9D2',
                     fontWeight: 400,
+                    fontFamily: '"Azeret Mono"',
                     fontSize: '32px',
-                    marginTop: '8px',
+                    marginTop: '8px'
                   },
                   children: [`${commission.data._id}`],
                 },
@@ -183,7 +167,7 @@ export default defineEventHandler(async (event) => {
                   style: {
                     display: 'flex',
                     alignItems: 'center',
-                    color: '#818192',
+                    color: '#CDB9D2',
                     fontSize: '24px',
                   },
                   children: [
@@ -208,7 +192,7 @@ export default defineEventHandler(async (event) => {
               {
                 type: 'span',
                 props: {
-                  style: { color: '#818192', fontSize: '24px' },
+                  style: { color: '#CDB9D2', fontSize: '24px' },
                   children: [formattedDate],
                 },
               },
@@ -225,7 +209,7 @@ export default defineEventHandler(async (event) => {
               left: 0,
               width: '100%',
               height: '8px',
-              backgroundColor: '#06b6d4',
+              backgroundColor: '#a684ff',
             },
           },
         },
@@ -247,6 +231,12 @@ export default defineEventHandler(async (event) => {
         name: 'Geist',
         data: assets.fontBold?.buffer as ArrayBuffer,
         weight: 700,
+        style: 'normal',
+      },
+      {
+        name: 'Azeret Mono',
+        data: assets.fontMono?.buffer as ArrayBuffer,
+        weight: 400,
         style: 'normal',
       },
     ],
