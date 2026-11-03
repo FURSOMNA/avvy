@@ -1,5 +1,5 @@
 export default defineNitroPlugin(async () => {
-  // This plugin is responsible for setting up the Redflare application on first run.
+  // This plugin is responsible for setting up the Avvy application on first run.
   // It checks if the application has been set up, and if not, it creates the initial admin account.
   const isLocked = await isSetupLocked();
   if (isLocked) return;
