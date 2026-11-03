@@ -29,7 +29,11 @@ const handleClose = () => props.overlay.close();
           :key="changelogIndex"
           :changelog-index="changelogIndex"
           :character-index="characterIndex"
-          @remove="() => { state?.splice(changelogIndex, 1) }"
+          @remove="
+            () => {
+              state?.splice(changelogIndex, 1);
+            }
+          "
         />
       </div>
       <div v-else class="text-center text-sm text-muted-foreground">

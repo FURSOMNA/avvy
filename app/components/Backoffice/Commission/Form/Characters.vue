@@ -90,7 +90,7 @@ defineExpose({
           </UFormField>
           <UFormField label="Note" name="note">
             <UTextarea
-              v-model="(character.note as string)"
+              v-model="character.note as string"
               placeholder="Optional character note"
               class="w-full"
             />

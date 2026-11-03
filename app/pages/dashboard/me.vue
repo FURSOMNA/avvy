@@ -76,7 +76,11 @@ definePageMeta({
         v-if="currentView === 'hub'"
         :items="hubItems"
         orientation="vertical"
-        :ui="{ list: 'bg-muted rounded-lg', link: 'gap-3 px-4 py-3 text-lg border-b border-neutral-700', item: 'last:[&>button]:border-b-0' }"
+        :ui="{
+          list: 'bg-muted rounded-lg',
+          link: 'gap-3 px-4 py-3 text-lg border-b border-neutral-700',
+          item: 'last:[&>button]:border-b-0',
+        }"
       />
       <div v-else class="space-y-4">
         <UButton

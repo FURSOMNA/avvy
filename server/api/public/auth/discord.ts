@@ -6,7 +6,8 @@ type DiscordOAuthResponseQuery = {
 };
 
 export default defineEventHandler(async (event) => {
-  const { clientId: client_id, clientSecret: client_secret } = await getDiscordSecrets();
+  const { clientId: client_id, clientSecret: client_secret } =
+    await getDiscordSecrets();
   const redirect_uri = `${getRequestURL(event).origin}/api/public/auth/discord`;
   const discordUrls = {
     authorization: 'https://discord.com/api/oauth2/authorize',
@@ -71,7 +72,7 @@ export default defineEventHandler(async (event) => {
     customer: customerUser?._id.toString(),
     user: discordUser,
     secure: {
-      access_token: discordAccessToken
+      access_token: discordAccessToken,
     },
   });
   return sendRedirect(event, '/me');

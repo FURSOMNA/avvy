@@ -8,23 +8,27 @@ Keep in mind, we'll only accept pull requests that align with our project's goal
 
 1. **Fork the repository** and create your branch from `main`.
 2. **Clone your fork** and set up the project:
-    ```sh
-    git clone https://github.com/<your-username>/avvy.git
-    cd avvy
-    ```
+
+   ```sh
+   git clone https://github.com/<your-username>/avvy.git
+   cd avvy
+   ```
 3. **Create a new branch** for your feature or fix:
-    ```sh
-    git checkout -b my-feature
-    ```
+
+   ```sh
+   git checkout -b my-feature
+   ```
 4. **Setup your environment properly**, be sure to duplicate the `.env.example` file to `.env` and fill in the required variables. We recommend using a local MongoDB instance for development, use docker if needed. For package management, we use bun.
-    ```sh
-    bun install
-    ```
+
+   ```sh
+   bun install
+   ```
 5. **Make your changes** in accordance with the project's coding standards.
 6. **Commit your changes** with a clear message, be sure to follow conventional commit guidelines:
-    ```sh
-    git commit -m "feat: add feature X"
-    ```
+
+   ```sh
+   git commit -m "feat: add feature X"
+   ```
 7. **Push to your fork** and open a Pull Request against the `main` branch.
 
 ## Commit Message Guidelines

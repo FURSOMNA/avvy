@@ -33,7 +33,7 @@ const formattedTimestamp = (timestamp: string | Date) => {
     <li
       class="rf-shared-readonly-transaction-card"
       v-for="payment in payments"
-      :key="(payment._id as unknown as string)"
+      :key="payment._id as unknown as string"
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2 text-sm">

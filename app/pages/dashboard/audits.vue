@@ -80,7 +80,7 @@ definePageMeta({
             class="rf_auditheader-item rf_auditaction_label"
             :class="{
               'text-primary': audit.action !== AuditAction.Delete,
-              'text-error': audit.action === AuditAction.Delete
+              'text-error': audit.action === AuditAction.Delete,
             }"
           >
             <UIcon :name="iconizeAuditAction(audit.action)" />

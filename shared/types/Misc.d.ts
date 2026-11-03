@@ -61,5 +61,5 @@ export interface AvvySetupDoctorCheckObject {
     geishaSecured: boolean;
     discordOauthSecured: boolean;
     databaseSecured: boolean;
-  }
+  };
 }

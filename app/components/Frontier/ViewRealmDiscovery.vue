@@ -43,7 +43,9 @@ const handleAuthenticated = (realm: Realm) => {
       :key="currentView"
       @view-select="handleSelectRealm"
       @view-back="handleBack"
-      @view-authenticated="handleAuthenticated(currentView === 'auth-agent' ? 'agent' : 'public')"
+      @view-authenticated="
+        handleAuthenticated(currentView === 'auth-agent' ? 'agent' : 'public')
+      "
     />
   </Transition>
 </template>

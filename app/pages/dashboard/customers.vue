@@ -11,7 +11,8 @@ const {
   refresh,
   asyncStatus,
   state,
-} = useQuery(() => customersQuery({
+} = useQuery(() =>
+  customersQuery({
     page: tablePage.value,
     sorting: tableSorting.value[0]
       ? {
@@ -19,7 +20,7 @@ const {
           order: tableSorting.value[0].desc ? -1 : 1,
         }
       : undefined,
-  })
+  }),
 );
 
 watch(state, (newState) => {

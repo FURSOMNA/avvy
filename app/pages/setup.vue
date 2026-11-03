@@ -21,7 +21,9 @@ definePageMeta({
 
 <template>
   <div class="h-full flex items-center justify-center">
-    <div class="space-y-6 max-w-2xl w-full bg-neutral-800/75 border border-neutral-700/50 p-12 rounded-lg shadow-xl">
+    <div
+      class="space-y-6 max-w-2xl w-full bg-neutral-800/75 border border-neutral-700/50 p-12 rounded-lg shadow-xl"
+    >
       <div class="py-2 mx-auto text-center">
         <HeaderLogo size="lg" />
       </div>

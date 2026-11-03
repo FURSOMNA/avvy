@@ -8,7 +8,8 @@ const {
   data: commissions,
   refetch: refetchCommissions,
   asyncStatus,
-} = useQuery(() => commissionsQuery({
+} = useQuery(() =>
+  commissionsQuery({
     page: tablePage.value,
     sorting: tableSorting.value[0]
       ? {
@@ -16,7 +17,7 @@ const {
           order: tableSorting.value[0].desc ? -1 : 1,
         }
       : undefined,
-  })
+  }),
 );
 // Overlays
 const overlay = useOverlay();
@@ -41,7 +42,7 @@ const actions: PageAction[] = [
 
 definePageMeta({
   title: 'Commissions',
-  keepalive: true
+  keepalive: true,
 });
 </script>
 

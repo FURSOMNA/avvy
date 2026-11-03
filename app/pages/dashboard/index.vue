@@ -89,7 +89,11 @@ const session = useUserSession();
       </h1>
       <div v-if="!statsLoading">
         <UButton
-          @click="() => { statsRefetch() }"
+          @click="
+            () => {
+              statsRefetch();
+            }
+          "
           label="Refresh stats"
           icon="i-lucide-refresh-cw"
         />
@@ -102,9 +106,14 @@ const session = useUserSession();
         class="flex flex-col gap-4 bg-muted border border-neutral-700/50 shadow-xl rounded-lg p-4"
       >
         <span class="font-medium">{{ stat.label }}</span>
-        <span class="text-2xl font-bold"
-          >{{ stat.type === 'currency' ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(stat.value) : stat.value }}</span
-        >
+        <span class="text-2xl font-bold">{{
+          stat.type === 'currency'
+            ? new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }).format(stat.value)
+            : stat.value
+        }}</span>
       </div>
     </div>
     <div v-else>Loading stats...</div>

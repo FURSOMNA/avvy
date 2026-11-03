@@ -20,7 +20,7 @@ const hiddenToAnonymous =
   <div
     class="rf-publicsession-sessioncard"
     :class="{
-      'small-card': size === 'sm'
+      'small-card': size === 'sm',
     }"
     v-if="hiddenToAnonymous"
   >
@@ -28,7 +28,11 @@ const hiddenToAnonymous =
       <UButton
         label="Login with Discord"
         icon="i-ic-baseline-discord"
-        @click="() => { login() }"
+        @click="
+          () => {
+            login();
+          }
+        "
       />
     </div>
     <div v-else-if="isLoggedIn && session" class="sc-session-container">
@@ -50,7 +54,11 @@ const hiddenToAnonymous =
           variant="soft"
           color="neutral"
           label="Log out"
-          @click="() => { clear() }"
+          @click="
+            () => {
+              clear();
+            }
+          "
           size="sm"
           icon="i-heroicons-arrow-left-start-on-rectangle-16-solid"
           class="underline hover:no-underline"

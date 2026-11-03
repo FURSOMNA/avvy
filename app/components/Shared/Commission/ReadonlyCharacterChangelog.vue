@@ -95,7 +95,7 @@ const formatTime = (t: string) => useTimeAgo(new Date(t)).value;
                 <ULink
                   external
                   target="_blank"
-                  :to="(avatarBase?.storefront_url as string)"
+                  :to="avatarBase?.storefront_url as string"
                 >
                   <UButton
                     size="sm"
@@ -166,7 +166,9 @@ const formatTime = (t: string) => useTimeAgo(new Date(t)).value;
                   <div class="details">
                     {{ attachments[attachment]?.filetype }}
                     •
-                    {{ formatFileSize(attachments[attachment]?.size as number) }}
+                    {{
+                      formatFileSize(attachments[attachment]?.size as number)
+                    }}
                   </div>
                 </div>
               </button>

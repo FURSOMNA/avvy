@@ -16,12 +16,22 @@ const customerFormStore = useCustomerFormStore();
             variant="soft"
             :loading="customerFormStore.destroyBusy"
             data-testid="delete-customer-submit"
-            @click="() => { customerFormStore.safeDestroy(customerFormStore.additionalState.id as string) }"
+            @click="
+              () => {
+                customerFormStore.safeDestroy(
+                  customerFormStore.additionalState.id as string,
+                );
+              }
+            "
           />
         </div>
         <div class="flex w-full justify-end gap-2">
           <UButton
-            @click="() => { customerFormStore.update() }"
+            @click="
+              () => {
+                customerFormStore.update();
+              }
+            "
             :loading="customerFormStore.updateBusy"
             data-testid="edit-customer-submit"
             >Save</UButton

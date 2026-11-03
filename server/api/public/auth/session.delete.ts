@@ -5,7 +5,8 @@ export default defineEventHandler(async (event) => {
   if (!user)
     throw createError({ status: 401, statusText: 'Not authenticated' });
   // Revoke Discord's token if exists before clearing session
-  const { clientId: client_id, clientSecret: client_secret } = await getDiscordSecrets();
+  const { clientId: client_id, clientSecret: client_secret } =
+    await getDiscordSecrets();
   try {
     await $fetch('https://discord.com/api/oauth2/token/revoke', {
       method: 'POST',

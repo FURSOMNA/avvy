@@ -27,7 +27,7 @@ const { formState, schema, submit, busy } = useKnowledgeBaseConfigMutation(
         label="URL to 'How to upload private avatar'"
       >
         <UInput
-          v-model="(formState.helpLinks.howToUploadAvatarUrl as string)"
+          v-model="formState.helpLinks.howToUploadAvatarUrl as string"
           placeholder="https://path.to/guide"
         />
       </UFormField>

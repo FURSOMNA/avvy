@@ -8,11 +8,7 @@ definePageMeta({
 
 const toast = useToast();
 const { user } = useUserSession();
-const {
-  data: accounts,
-  refresh,
-  asyncStatus,
-} = useQuery(agentAccountsQuery());
+const { data: accounts, refresh, asyncStatus } = useQuery(agentAccountsQuery());
 
 const createFormState = reactive({
   username: '',
@@ -94,15 +90,15 @@ const deleteAccount = async (id: string) => {
         { accessorKey: 'username', header: 'Username' },
         { accessorKey: 'displayName', header: 'Display name' },
         { accessorKey: 'createdAt', header: 'Created' },
-        { accessorKey: '_id', header: '' }
+        { accessorKey: '_id', header: '' },
       ]"
     >
-      <template #displayName-cell="{ row }"
-        >{{ row.original.displayName || '—' }}</template
-      >
-      <template #createdAt-cell="{ row }"
-        >{{ new Date(row.original.createdAt).toLocaleDateString() }}</template
-      >
+      <template #displayName-cell="{ row }">{{
+        row.original.displayName || '—'
+      }}</template>
+      <template #createdAt-cell="{ row }">{{
+        new Date(row.original.createdAt).toLocaleDateString()
+      }}</template>
       <template #_id-cell="{ row }">
         <UButton
           v-if="row.original._id.toString() !== user?.id"
@@ -142,7 +138,9 @@ const deleteAccount = async (id: string) => {
             :model-value="createFormState.permissions.includes(permission)"
             :name="`permission-${permission}`"
             :label="permission"
-            @update:model-value="(checked) => togglePermission(permission, checked)"
+            @update:model-value="
+              (checked) => togglePermission(permission, checked)
+            "
           />
         </div>
 

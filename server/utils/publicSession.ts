@@ -29,8 +29,8 @@ const initPublicSession = async (event: H3Event) => {
     name: 'rf_public_session',
     password: secret,
     cookie: {
-      sameSite: 'lax'
-    }
+      sameSite: 'lax',
+    },
   });
   // Check session.data has the expected properties
   const sessionProps = ['id', 'user', 'customer', 'secure'];

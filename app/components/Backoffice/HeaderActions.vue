@@ -24,7 +24,7 @@ defineProps<{
   </div>
 </template>
 
-<style>
+<style scoped>
 @reference "~/assets/global.css";
 
 .rf_pageheader_actions {

@@ -22,7 +22,7 @@ const isMobile = useMediaQuery('(max-width: 640px)');
       <UFormField label="Username" name="username" required>
         <UInput
           type="text"
-          v-model="(meProfileFormState.username as string)"
+          v-model="meProfileFormState.username as string"
           required
           class="w-full"
         />
@@ -30,7 +30,7 @@ const isMobile = useMediaQuery('(max-width: 640px)');
       <UFormField label="Display name" name="displayName">
         <UInput
           type="text"
-          v-model="(meProfileFormState.displayName as string)"
+          v-model="meProfileFormState.displayName as string"
           class="w-full"
         />
       </UFormField>

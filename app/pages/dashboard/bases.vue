@@ -43,7 +43,7 @@ const actions: PageAction[] = [
 
 definePageMeta({
   title: 'Avatar bases',
-  keepalive: true
+  keepalive: true,
 });
 </script>
 

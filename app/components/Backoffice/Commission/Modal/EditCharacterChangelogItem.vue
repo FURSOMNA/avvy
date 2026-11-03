@@ -196,14 +196,22 @@ watch(tempFile, async (newFile) => {
           color="error"
           variant="outline"
           size="sm"
-          @click="() => { changelogItemState.items.splice(itemIndex, 1) }"
+          @click="
+            () => {
+              changelogItemState.items.splice(itemIndex, 1);
+            }
+          "
         />
       </div>
       <div class="flex justify-start">
         <UButton
           color="neutral"
           variant="soft"
-          @click="() => { changelogItemState.items.push('') }"
+          @click="
+            () => {
+              changelogItemState.items.push('');
+            }
+          "
           label="Add change"
         />
       </div>
@@ -217,7 +225,10 @@ watch(tempFile, async (newFile) => {
         >
           <UTooltip
             class="w-full h-full"
-            :text="commissionFormStore.additionalState.attachments[attachment]?.filename || 'Unknown file'"
+            :text="
+              commissionFormStore.additionalState.attachments[attachment]
+                ?.filename || 'Unknown file'
+            "
           >
             <button
               type="button"
@@ -232,7 +243,11 @@ watch(tempFile, async (newFile) => {
           <UFileUpload
             v-model="tempFile"
             variant="button"
-            :accept="getAllowedAttachmentExtensions().map(ext => `.${ext}`).join(',')"
+            :accept="
+              getAllowedAttachmentExtensions()
+                .map((ext) => `.${ext}`)
+                .join(',')
+            "
             class="w-16 h-16"
             :disabled="tempFileUploading"
           />

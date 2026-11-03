@@ -27,7 +27,7 @@ const customerSearchSelected = shallowRef<DeserializedCustomer>();
 const { data: customers, isLoading: getCustomersBusy } = useQuery(() =>
   customerFilterQuery({
     name: customerSearchQuery.value || '',
-  })
+  }),
 );
 const availableCustomers = computed(() => {
   const hasCustomer =
@@ -199,7 +199,9 @@ defineExpose({
 
 <template>
   <div
-    v-if="(props.commissionId && !commissionFormStore.busy) || !props.commissionId"
+    v-if="
+      (props.commissionId && !commissionFormStore.busy) || !props.commissionId
+    "
     class="space-y-4"
   >
     <UTabs
@@ -241,7 +243,7 @@ defineExpose({
           </UFormField>
           <UFormField name="public_note" label="Public Note">
             <UInput
-              v-model="(commissionFormStore.formState.public_note as string)"
+              v-model="commissionFormStore.formState.public_note as string"
               class="w-full"
             />
           </UFormField>
@@ -250,7 +252,7 @@ defineExpose({
             label="Private Note (only visible to you)"
           >
             <UInput
-              v-model="(commissionFormStore.formState.secure_note as string)"
+              v-model="commissionFormStore.formState.secure_note as string"
               class="w-full"
             />
           </UFormField>

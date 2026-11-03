@@ -33,8 +33,12 @@ export const useStorageBucket = async (
   bucketType: 'default' | 'temp' = 'default',
 ) => {
   // Get secrets from Infisical.
-  const { secretValue: s3Access } = await (await useInfisical()).getSecret('S3_ACCESS');
-  const { secretValue: s3Secret } = await (await useInfisical()).getSecret('S3_SECRET');
+  const { secretValue: s3Access } = await (await useInfisical()).getSecret(
+    'S3_ACCESS',
+  );
+  const { secretValue: s3Secret } = await (await useInfisical()).getSecret(
+    'S3_SECRET',
+  );
   if (!s3Access || !s3Secret) {
     throw createError({
       status: 500,
@@ -57,8 +61,12 @@ export const useStorageBucket = async (
 
 export const useStorageClient = async () => {
   // Get secrets from Infisical.
-  const { secretValue: s3Access } = await (await useInfisical()).getSecret('S3_ACCESS');
-  const { secretValue: s3Secret } = await (await useInfisical()).getSecret('S3_SECRET');
+  const { secretValue: s3Access } = await (await useInfisical()).getSecret(
+    'S3_ACCESS',
+  );
+  const { secretValue: s3Secret } = await (await useInfisical()).getSecret(
+    'S3_SECRET',
+  );
   if (!s3Access || !s3Secret) {
     throw createError({
       status: 500,
@@ -129,7 +137,9 @@ export const bucketGetSignedDownloadUrl = async (
   const client = await useStorageClient();
   const endpoint = getEndpoint();
 
-  const exists = await (await useStorageBucket('default')).hasItem(destinationPath);
+  const exists = await (await useStorageBucket('default')).hasItem(
+    destinationPath,
+  );
   if (!exists) {
     logger
       .withTag('storage')
@@ -212,12 +222,14 @@ export const bucketDeleteFile = async (
   bucketType: 'default' | 'temp' = 'default',
 ) => {
   const bucket = await useStorageBucket(bucketType);
-  await bucket.removeItem(destinationPath, { removeMeta: true }).catch((error) => {
-    throw createError({
-      status: 500,
-      statusText: `Failed to delete file from bucket: ${error.message}`,
+  await bucket
+    .removeItem(destinationPath, { removeMeta: true })
+    .catch((error) => {
+      throw createError({
+        status: 500,
+        statusText: `Failed to delete file from bucket: ${error.message}`,
+      });
     });
-  });
   return true;
 };
 

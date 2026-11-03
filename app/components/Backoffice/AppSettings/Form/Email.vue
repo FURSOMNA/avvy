@@ -24,19 +24,19 @@ const { formState, schema, submit, busy } = useEmailConfigMutation(
     >
       <UFormField name="contact.support" label="Support email">
         <UInput
-          v-model="(formState.contact.support as string)"
+          v-model="formState.contact.support as string"
           placeholder="support@example.com"
         />
       </UFormField>
       <UFormField name="contact.copyright" label="Copyright email">
         <UInput
-          v-model="(formState.contact.copyright as string)"
+          v-model="formState.contact.copyright as string"
           placeholder="copyright@example.com"
         />
       </UFormField>
       <UFormField name="contact.legal" label="Legal email">
         <UInput
-          v-model="(formState.contact.legal as string)"
+          v-model="formState.contact.legal as string"
           placeholder="legal@example.com"
         />
       </UFormField>

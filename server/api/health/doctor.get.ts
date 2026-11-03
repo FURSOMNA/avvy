@@ -1,7 +1,6 @@
 export default defineEventHandler(async (event) => {
-  if (await isSetupLocked())
-    await needAuth(event);
-  
+  if (await isSetupLocked()) await needAuth(event);
+
   const isInfisicalAvailable = await isSecuredVaultHealthy();
   let secretNames: string[] = [];
 
@@ -30,14 +29,12 @@ export default defineEventHandler(async (event) => {
         process.env.S3_ENDPOINT !== undefined &&
         process.env.S3_BUCKET_AVATARFILES !== undefined &&
         process.env.S3_BUCKET_AVATARFILES_TEMP !== undefined,
-      geishaSecured:
-        secretNames.includes('GEISHA_SECRET'),
+      geishaSecured: secretNames.includes('GEISHA_SECRET'),
       discordOauthSecured:
         secretNames.includes('DISCORD_CLIENT_ID') &&
         secretNames.includes('DISCORD_CLIENT_SECRET'),
-      databaseSecured:
-        process.env.NUXT_BACKOFFICE_MONGO !== undefined
-    }
+      databaseSecured: process.env.NUXT_BACKOFFICE_MONGO !== undefined,
+    },
   };
 
   return doctorCheck;

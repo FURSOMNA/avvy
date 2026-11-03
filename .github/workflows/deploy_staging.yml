@@ -2,60 +2,60 @@ name: Deploy main branch to Cloud Run as staging
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     paths-ignore: # do not build for irrelvant changes like markdown files
-      - '**.md'
+      - "**.md"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     outputs:
       digest: ${{ steps.build-push.outputs.digest }}
       meta: ${{ steps.meta.outputs.json }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v7
+      - name: Checkout code
+        uses: actions/checkout@v7
 
-    - name: Authenticate to Google Cloud
-      id: auth
-      uses: ./.github/actions/gcp-auth
-      with:
-        token_format: 'access_token'
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: ./.github/actions/gcp-auth
+        with:
+          token_format: "access_token"
 
-    - name: Login to pkg.dev
-      uses: docker/login-action@v4
-      with:
-        registry: us-west1-docker.pkg.dev
-        username: oauth2accesstoken
-        password: ${{ steps.auth.outputs.access_token }}
+      - name: Login to pkg.dev
+        uses: docker/login-action@v4
+        with:
+          registry: us-west1-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
 
-    - name: Generate docker metadata
-      id: meta
-      uses: docker/metadata-action@v6
-      with:
-        images: us-west1-docker.pkg.dev/redflare-prod/avatars-console/redflare
+      - name: Generate docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: us-west1-docker.pkg.dev/redflare-prod/avatars-console/redflare
 
-    - name: Build and push
-      id: build-push
-      uses: docker/build-push-action@v7
-      with:
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        build-args: |
+      - name: Build and push
+        id: build-push
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
             BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
             SOURCE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.source'] }}
-  
+
   migrate:
     uses: ./.github/workflows/migrate-db.yml
     needs: build
@@ -64,7 +64,7 @@ jobs:
     with:
       env: staging
     secrets: inherit
-  
+
   deploy-staging-canary:
     uses: ./.github/workflows/cloudrun-deploy.yml
     needs: build
@@ -82,8 +82,8 @@ jobs:
     environment:
       name: staging
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     needs:
       - build
       - deploy-staging-canary
@@ -105,7 +105,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v3
         with:
-          install_components: 'cloud-run-proxy'
+          install_components: "cloud-run-proxy"
 
       - name: Start canary proxy
         run: |
@@ -159,7 +159,7 @@ jobs:
       - env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: bun run scripts/rollback.ts ${{ needs.migrate.outputs.applied_count }}
-  
+
   deploy-staging:
     uses: ./.github/workflows/cloudrun-deploy.yml
     needs: [build, test-e2e]

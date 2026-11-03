@@ -37,7 +37,11 @@ const handleCommissionCardClick = (commissionId: string) => {
             <UButton
               label="Login with Discord"
               icon="i-ic-baseline-discord"
-              @click="() => { login() }"
+              @click="
+                () => {
+                  login();
+                }
+              "
             />
           </div>
         </div>
@@ -53,7 +57,11 @@ const handleCommissionCardClick = (commissionId: string) => {
             class="rf-public-commission-card"
             v-for="commission in commissionsData?.data"
             :key="commission._id"
-            @click.stop="() => { handleCommissionCardClick(commission._id) }"
+            @click.stop="
+              () => {
+                handleCommissionCardClick(commission._id);
+              }
+            "
           >
             <div class="flex items-center justify-between gap-4">
               <span
@@ -70,7 +78,11 @@ const handleCommissionCardClick = (commissionId: string) => {
                 class="text-primary"
                 name="i-heroicons-calendar-16-solid"
               />
-              {{ new Intl.DateTimeFormat('default', { dateStyle: 'long' }).format(new Date(commission.created_at)) }}
+              {{
+                new Intl.DateTimeFormat('default', {
+                  dateStyle: 'long',
+                }).format(new Date(commission.created_at))
+              }}
             </div>
           </button>
         </div>

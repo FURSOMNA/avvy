@@ -51,7 +51,7 @@ const actions = {
         class="flex w-full items-center gap-4"
         :class="{
           'flex-row-reverse justify-start': danger,
-          'justify-end': !danger
+          'justify-end': !danger,
         }"
       >
         <UButton

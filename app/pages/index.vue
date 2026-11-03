@@ -55,10 +55,13 @@ const isMobile = useMediaQuery('(max-width: 768px)');
             :to="page.to"
             target="_blank"
             class="text-primary-400 hover:underline"
-            >{{ page.name }}</ULink
+            >{{
+              page.name
+            }}</ULink
           >
           <span v-if="index < legalAgreements.length - 1"> and </span>
-        </span>.
+        </span
+        >.
       </div>
     </div>
   </div>

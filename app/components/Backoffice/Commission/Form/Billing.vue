@@ -82,7 +82,11 @@ const headerExtraActionsItems: DropdownMenuItem[][] = [
         <h2>Transactions</h2>
         <div>
           <UButton
-            @click="() => { transactionsRefresh() }"
+            @click="
+              () => {
+                transactionsRefresh();
+              }
+            "
             label="Refresh"
             icon="i-lucide-refresh-cw"
             color="neutral"
@@ -98,7 +102,7 @@ const headerExtraActionsItems: DropdownMenuItem[][] = [
           v-for="transaction in transactions"
           :key="transaction._id"
           :transaction
-          :commission="(commissionFormStore.additionalState.id as string)"
+          :commission="commissionFormStore.additionalState.id as string"
           @deleted="() => transactionsRefresh()"
           @updated="() => transactionsRefresh()"
         />

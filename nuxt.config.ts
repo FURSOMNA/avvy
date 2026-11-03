@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     '/dashboard/**': {
       ssr: false,
       appLayout: 'backoffice',
-      appMiddleware: ['agent-only']
+      appMiddleware: ['agent-only'],
     },
     '/commission': { redirect: '/me' },
   },
@@ -71,7 +71,7 @@ export default defineNuxtConfig({
       mongo: '',
     },
     frontoffice: {
-      sessionPassword: ''
+      sessionPassword: '',
     },
   },
 });

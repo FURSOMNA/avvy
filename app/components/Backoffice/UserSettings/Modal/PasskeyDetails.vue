@@ -35,7 +35,11 @@ const isMobile = useMediaQuery('(max-width: 640px)');
           <div>
             <div class="text-xs text-muted">Last used</div>
             <div>
-              {{ passkey.lastUsedAt ? useDateFormat(passkey.lastUsedAt, 'MMM Do YYYY, HH:MM') : 'Never' }}
+              {{
+                passkey.lastUsedAt
+                  ? useDateFormat(passkey.lastUsedAt, 'MMM Do YYYY, HH:MM')
+                  : 'Never'
+              }}
             </div>
           </div>
           <div>

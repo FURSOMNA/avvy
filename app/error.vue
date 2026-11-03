@@ -23,7 +23,11 @@ const mapErrors: { [key: number]: string } = {
       <div v-if="props.error" class="font-mono">
         <h1 v-text="props.error.status" />
         <div
-          v-text="props.error.statusMessage || mapErrors[props.error.status as number] || 'Unknown error'"
+          v-text="
+            props.error.statusMessage ||
+            mapErrors[props.error.status as number] ||
+            'Unknown error'
+          "
         />
       </div>
       <div class="my-4" v-if="props.error?.stack">

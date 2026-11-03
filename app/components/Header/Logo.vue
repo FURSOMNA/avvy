@@ -18,7 +18,7 @@ withDefaults(
       :class="{
         'h-9': size === 'base',
         'h-12': size === 'lg',
-        'h-16': size === 'xl'
+        'h-16': size === 'xl',
       }"
     />
   </div>

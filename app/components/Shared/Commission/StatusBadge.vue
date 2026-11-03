@@ -92,7 +92,7 @@ const thisLabel =
 
 <template>
   <UBadge
-    :color="(thisLabel.color as colorType)"
+    :color="thisLabel.color as colorType"
     :label="thisLabel.label"
     :icon="thisLabel.icon"
     :size

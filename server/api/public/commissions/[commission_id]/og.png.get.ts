@@ -144,7 +144,7 @@ export default defineEventHandler(async (event) => {
                     fontWeight: 400,
                     fontFamily: '"Azeret Mono"',
                     fontSize: '32px',
-                    marginTop: '8px'
+                    marginTop: '8px',
                   },
                   children: [`${commission.data._id}`],
                 },

@@ -156,7 +156,11 @@ useSeoMeta({
           <UButton
             label="Log in with Discord"
             icon="i-ic-baseline-discord"
-            @click="() => { login() }"
+            @click="
+              () => {
+                login();
+              }
+            "
           />
         </div>
       </div>
@@ -188,7 +192,11 @@ useSeoMeta({
         </div>
         <div id="commission_sections" class="space-y-4">
           <section
-            v-if="commissionTimelineAllowedValues.includes(commissionRoutedValue as AllowedTimelineValues)"
+            v-if="
+              commissionTimelineAllowedValues.includes(
+                commissionRoutedValue as AllowedTimelineValues,
+              )
+            "
           >
             <UTimeline
               :items="commissionTimeline"
@@ -218,7 +226,13 @@ useSeoMeta({
                         <span
                           class="text-sm font-bold font-mono uppercase select-all"
                         >
-                          {{ commission.data._id?.toString().substring(commission.data._id.toString().length - 6) }}-{{ charIndex }}
+                          {{
+                            commission.data._id
+                              ?.toString()
+                              .substring(
+                                commission.data._id.toString().length - 6,
+                              )
+                          }}-{{ charIndex }}
                         </span>
                       </div>
                     </UTooltip>
@@ -261,7 +275,9 @@ useSeoMeta({
                       color="neutral"
                       variant="soft"
                       size="lg"
-                      @click="handleCharacterChangelogOpen(char.changelog, charIndex)"
+                      @click="
+                        handleCharacterChangelogOpen(char.changelog, charIndex)
+                      "
                     />
                   </div>
                 </div>
@@ -279,7 +295,9 @@ useSeoMeta({
               </div>
               <div class="space-y-2">
                 <div
-                  v-if="commission.data.locked_fields.characters_count !== undefined"
+                  v-if="
+                    commission.data.locked_fields.characters_count !== undefined
+                  "
                   class="flex items-center gap-2"
                 >
                   <UIcon
@@ -303,7 +321,11 @@ useSeoMeta({
           <div class="flex items-center gap-2">
             <UIcon name="i-heroicons-clock-16-solid" class="text-primary" />
             <span
-              v-text="new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date(commission.data.created_at))"
+              v-text="
+                new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
+                  new Date(commission.data.created_at),
+                )
+              "
             />
           </div>
           <div class="flex items-center gap-2">
@@ -326,11 +348,17 @@ useSeoMeta({
         </section>
         <section
           class="space-y-4"
-          v-if="commission.data.payments && (commission.data.payments as OptionalId<PaymentTransaction>[]).length"
+          v-if="
+            commission.data.payments &&
+            (commission.data.payments as OptionalId<PaymentTransaction>[])
+              .length
+          "
         >
           <h2>Payments</h2>
           <SharedCommissionReadonlyPayments
-            :payments="(commission.data.payments as OptionalId<PaymentTransaction>[])"
+            :payments="
+              commission.data.payments as OptionalId<PaymentTransaction>[]
+            "
           />
         </section>
         <section class="space-y-4" v-if="commission.data.public_note?.length">

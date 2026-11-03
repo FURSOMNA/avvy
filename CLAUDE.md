@@ -36,7 +36,7 @@ docker compose up -d
 Avvy has two distinct kinds of users that must not be conflated:
 
 - **Agent users** (artists/managers) — authenticated via a custom native session system, session managed by `nuxt-auth-utils`' built-in `useUserSession`/`getUserSession`. Logic lives in `server/utils/agentSession.ts`.
-- **Public users** (customers) — authenticated via Discord OAuth, session is a *separate* custom cookie-backed session implemented from scratch in `server/utils/publicSession.ts` (`getPublicUserSession`/`setPublicUserSession`, its own `rf_public_session` cookie, temp authorizations for e.g. one-off attachment access).
+- **Public users** (customers) — authenticated via Discord OAuth, session is a _separate_ custom cookie-backed session implemented from scratch in `server/utils/publicSession.ts` (`getPublicUserSession`/`setPublicUserSession`, its own `rf_public_session` cookie, temp authorizations for e.g. one-off attachment access).
 
 A single commission can be viewed by either kind of user (or anonymously), and much of the API branches on a `ViewAs` type (`'agent' | 'customer' | 'anon'`) that controls field projection (e.g. hiding `secure_note`, `internal_note`, customer PII). See `validateCommission` in `server/utils/database.ts` for the canonical "who is viewing this commission and what can they see" resolution — it checks both sessions and an agent-only `forceAgentView` setting that lets an artist preview a commission as its owning customer would see it.
 
