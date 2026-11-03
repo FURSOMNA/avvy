@@ -3,9 +3,6 @@ import { agentAccountsQuery } from '~/queries/accounts';
 
 definePageMeta({
   title: 'Accounts',
-  description: 'Manage artist accounts',
-  middleware: 'agent-only',
-  layout: 'backoffice',
   keepalive: true,
 });
 
@@ -15,7 +12,7 @@ const {
   data: accounts,
   refresh,
   asyncStatus,
-} = useQuery(agentAccountsQuery, () => ({}));
+} = useQuery(agentAccountsQuery());
 
 const createFormState = reactive({
   username: '',
@@ -88,8 +85,7 @@ const deleteAccount = async (id: string) => {
 <template>
   <div class="space-y-6">
     <div v-if="asyncStatus === 'loading'" class="space-y-4">
-      <!-- biome-ignore lint/correctness/useVueVForKey: generic list render -->
-      <USkeleton class="w-full h-12" v-for="_ in new Array(3)" />
+      <USkeleton class="w-full h-12" v-for="_ in new Array(3)" :key="_" />
     </div>
     <UTable
       v-else
@@ -109,7 +105,7 @@ const deleteAccount = async (id: string) => {
       >
       <template #_id-cell="{ row }">
         <UButton
-          v-if="row.original._id !== user?.id"
+          v-if="row.original._id.toString() !== user?.id"
           size="xs"
           color="error"
           variant="soft"

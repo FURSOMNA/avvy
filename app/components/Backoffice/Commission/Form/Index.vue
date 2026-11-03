@@ -24,11 +24,10 @@ const formCharactersRef = ref();
 const customerSearchQueryRaw = shallowRef<string>('');
 const customerSearchQuery = refDebounced(customerSearchQueryRaw, 1000);
 const customerSearchSelected = shallowRef<DeserializedCustomer>();
-const { data: customers, isLoading: getCustomersBusy } = useQuery(
-  customerFilterQuery,
-  () => ({
+const { data: customers, isLoading: getCustomersBusy } = useQuery(() =>
+  customerFilterQuery({
     name: customerSearchQuery.value || '',
-  }),
+  })
 );
 const availableCustomers = computed(() => {
   const hasCustomer =
@@ -275,7 +274,6 @@ defineExpose({
     </UTabs>
   </div>
   <div v-else class="space-y-4">
-    <!-- biome-ignore lint/correctness/useVueVForKey: generic list rendering -->
-    <USkeleton class="w-full h-12" v-for="_ in new Array(4)" />
+    <USkeleton class="w-full h-12" v-for="_ in new Array(4)" :key="_" />
   </div>
 </template>

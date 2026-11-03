@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import type z from 'zod';
 import { avatarBasesQuery } from '~/queries/commissions';
 
-const schema = avatarBaseOptionsSchema;
+const schema = markRaw(avatarBaseOptionsSchema);
 type Schema = z.output<typeof schema>;
 type AdditionalState = {
   id: string | null;

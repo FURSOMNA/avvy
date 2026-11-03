@@ -17,14 +17,16 @@ const filtersActionValue = ref<AuditAction | undefined>(undefined);
 const filtersActionOptions = getAllAuditActionsValues('SelectItem[]');
 const openedDetails = ref<number>(-1);
 
-const { data: audits, refetch: auditsRefetch } = useQuery(auditsQuery, () => ({
-  filters: {
-    category: filtersCategoryValue.value,
-    action: filtersActionValue.value,
-  } as Partial<Audit>,
-  page: page.value,
-  sorting: { by: 'created_at', order: -1 as -1 },
-}));
+const { data: audits, refetch: auditsRefetch } = useQuery(() =>
+  auditsQuery({
+    filters: {
+      category: filtersCategoryValue.value,
+      action: filtersActionValue.value,
+    } as Partial<Audit>,
+    page: page.value,
+    sorting: { by: 'created_at', order: -1 as -1 },
+  }),
+);
 
 const actions: PageAction[] = [
   {

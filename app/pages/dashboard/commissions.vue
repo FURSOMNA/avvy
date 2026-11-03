@@ -8,13 +8,16 @@ const {
   data: commissions,
   refetch: refetchCommissions,
   asyncStatus,
-} = useQuery(commissionsQuery, () => ({
-  sorting: {
-    by: tableSorting.value[0]?.id || 'created_at',
-    order: tableSorting.value[0]?.desc ? -1 : 1,
-  },
-  page: tablePage.value,
-}));
+} = useQuery(() => commissionsQuery({
+    page: tablePage.value,
+    sorting: tableSorting.value[0]
+      ? {
+          by: tableSorting.value[0].id,
+          order: tableSorting.value[0].desc ? -1 : 1,
+        }
+      : undefined,
+  })
+);
 // Overlays
 const overlay = useOverlay();
 const addSlideoverOverlay = overlay.create(BackofficeCommissionAddSlideover);
@@ -38,10 +41,7 @@ const actions: PageAction[] = [
 
 definePageMeta({
   title: 'Commissions',
-  description: 'Manage your commissions',
-  middleware: 'agent-only',
-  layout: 'backoffice',
-  keepalive: true,
+  keepalive: true
 });
 </script>
 
@@ -50,8 +50,7 @@ definePageMeta({
     <BackofficeHeaderActions :actions="actions" />
     <div>
       <div v-if="asyncStatus === 'loading'" class="space-y-4">
-        <!-- biome-ignore lint/correctness/useVueVForKey: generic list render -->
-        <USkeleton class="w-full h-12" v-for="_ in new Array(4)" />
+        <USkeleton class="w-full h-12" v-for="_ in new Array(4)" :key="_" />
       </div>
       <div v-else-if="commissions?.data.length">
         <BackofficeCommissionTable

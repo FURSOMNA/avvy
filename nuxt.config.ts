@@ -26,7 +26,11 @@ export default defineNuxtConfig({
     '/api/**': { cors: false },
     '/api/service/**': { cors: true },
     '/api/auth/**': { cors: true },
-    '/dashboard/**': { ssr: false },
+    '/dashboard/**': {
+      ssr: false,
+      appLayout: 'backoffice',
+      appMiddleware: ['agent-only']
+    },
     '/commission': { redirect: '/me' },
   },
   modules: [

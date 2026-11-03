@@ -21,7 +21,7 @@ function toUpdateData(remoteData: CommissionBaseRaw): CommissionUpdate {
   return localData;
 }
 
-const schema = commissionUpdateSchema;
+const schema = markRaw(commissionUpdateSchema);
 type Schema = z.output<typeof schema>;
 type AdditionalState = {
   id: string | null;

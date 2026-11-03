@@ -20,8 +20,8 @@ function handleAddBaseButton() {
   addSlideoverOverlay.open();
 }
 
-function handleEditBaseButton(base: DeserializedAvatarBase) {
-  editSlideoverOverlay.open({ base });
+function handleEditBaseButton() {
+  editSlideoverOverlay.open();
 }
 
 const actions: PageAction[] = [
@@ -43,10 +43,7 @@ const actions: PageAction[] = [
 
 definePageMeta({
   title: 'Avatar bases',
-  description: 'Manage your avatar bases for commissions',
-  middleware: 'agent-only',
-  layout: 'backoffice',
-  keepalive: true,
+  keepalive: true
 });
 </script>
 

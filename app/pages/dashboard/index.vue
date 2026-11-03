@@ -3,8 +3,6 @@ import { statsQuery } from '~/queries/stats';
 
 definePageMeta({
   title: 'Home',
-  middleware: 'agent-only',
-  layout: 'backoffice',
   keepalive: true,
 });
 

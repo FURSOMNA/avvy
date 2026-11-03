@@ -11,13 +11,16 @@ const {
   refresh,
   asyncStatus,
   state,
-} = useQuery(customersQuery, () => ({
-  sorting: {
-    by: tableSorting.value[0]?.id || 'created_at',
-    order: tableSorting.value[0]?.desc ? -1 : 1,
-  },
-  page: tablePage.value,
-}));
+} = useQuery(() => customersQuery({
+    page: tablePage.value,
+    sorting: tableSorting.value[0]
+      ? {
+          by: tableSorting.value[0].id,
+          order: tableSorting.value[0].desc ? -1 : 1,
+        }
+      : undefined,
+  })
+);
 
 watch(state, (newState) => {
   const isError = newState.status === 'error';
@@ -58,9 +61,6 @@ const actions: PageAction[] = [
 
 definePageMeta({
   title: 'Customers',
-  description: 'Manage your customers',
-  middleware: 'agent-only',
-  layout: 'backoffice',
   keepalive: true,
 });
 </script>
@@ -69,8 +69,7 @@ definePageMeta({
   <div class="space-y-4">
     <BackofficeHeaderActions :actions="actions" />
     <div v-if="asyncStatus === 'loading'" class="space-y-4">
-      <!-- biome-ignore lint/correctness/useVueVForKey: generic list render -->
-      <USkeleton class="w-full h-12" v-for="_ in new Array(4)" />
+      <USkeleton class="w-full h-12" v-for="_ in new Array(4)" :key="_" />
     </div>
     <div v-else-if="customers?.data.length">
       <BackofficeCustomerTable
