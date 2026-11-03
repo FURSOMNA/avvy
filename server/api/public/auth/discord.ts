@@ -6,9 +6,7 @@ type DiscordOAuthResponseQuery = {
 };
 
 export default defineEventHandler(async (event) => {
-  const runtimeConfig = useRuntimeConfig();
-  const { clientId: client_id, clientSecret: client_secret } =
-    runtimeConfig.frontoffice.oauth.discord;
+  const { clientId: client_id, clientSecret: client_secret } = await getDiscordSecrets();
   const redirect_uri = `${getRequestURL(event).origin}/api/public/auth/discord`;
   const discordUrls = {
     authorization: 'https://discord.com/api/oauth2/authorize',

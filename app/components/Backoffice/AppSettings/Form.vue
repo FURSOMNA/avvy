@@ -7,6 +7,7 @@
     <BackofficeAppSettingsFormKnowledgeBase />
     <BackofficeAppSettingsFormEmail />
     <BackofficeAppSettingsFormLegal />
+    <BackofficeAppSettingsFormHealth />
   </div>
 </template>
 
@@ -14,6 +15,6 @@
 @reference "~/assets/global.css";
 
 .rf_settingsforms {
-  @apply grid grid-cols-2 gap-4 items-start;
+  @apply flex flex-col max-w-4xl gap-4 items-start mx-auto;
 }
 </style>

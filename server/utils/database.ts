@@ -1,5 +1,16 @@
 import type { EventHandlerRequest, H3Event } from 'h3';
 
+export const isDatabaseHealthy = async () => {
+  const mongo = await useMongo();
+  try {
+    const result = await mongo.db('admin').command({ ping: 1 });
+    return result.ok === 1;
+  } catch (error) {
+    console.error('Database health check failed:', error);
+    return false;
+  }
+};
+
 export const validateCommission = async (
   event: H3Event<EventHandlerRequest>,
   returnData?: boolean,

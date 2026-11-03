@@ -114,3 +114,13 @@ export const useInfisical = async () => {
     infisical: await _useInfisicalAuth(),
   };
 };
+
+export const isSecuredVaultHealthy = async () => {
+  try {
+    await (await useInfisical()).listSecrets();
+    return true;
+  } catch (error) {
+    console.error('Infisical health check failed:', error);
+    return false;
+  }
+};

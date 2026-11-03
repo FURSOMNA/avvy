@@ -29,7 +29,7 @@ defineProps<{
 @reference "~/assets/global.css";
 
 .rf_settingsformbox {
-  @apply border bg-neutral-100 dark:bg-neutral-800 rounded-lg shadow-md border-neutral-100 dark:border-neutral-700 overflow-hidden;
+  @apply w-full border bg-neutral-100 dark:bg-neutral-800 rounded-lg shadow-md border-neutral-100 dark:border-neutral-700 overflow-hidden;
   h2 {
     @apply text-xl font-semibold;
   }

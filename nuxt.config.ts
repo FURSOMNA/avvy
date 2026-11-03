@@ -59,25 +59,15 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      env: process.env.NODE_ENV || '',
-      avvy_env: '',
       turnstile: {
         site_key: '',
       },
     },
     backoffice: {
       mongo: '',
-      mongoDb: '',
-      service: '',
     },
     frontoffice: {
-      sessionPassword: '',
-      oauth: {
-        discord: {
-          clientId: '',
-          clientSecret: '',
-        },
-      },
+      sessionPassword: ''
     },
   },
 });

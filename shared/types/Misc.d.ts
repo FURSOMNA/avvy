@@ -48,3 +48,18 @@ export interface RedflareStats {
     total: number;
   };
 }
+
+export interface AvvySetupDoctorCheckObject {
+  servicesHealth: {
+    database: boolean;
+    storage: boolean;
+    securedVault: boolean;
+  };
+  variables: {
+    turnstileSecured: boolean;
+    storageSecured: boolean;
+    geishaSecured: boolean;
+    discordOauthSecured: boolean;
+    databaseSecured: boolean;
+  }
+}
