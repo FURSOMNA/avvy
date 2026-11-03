@@ -59,8 +59,8 @@ const doctorDisplayCheckList = computed(() => [
     label: 'Geisha Setup',
     keys: [
       {
-        name: 'GEISHA_API_KEY',
-        local: true,
+        name: 'GEISHA_SECRET',
+        local: false,
       },
     ],
     ok: doctorStatus.variables?.geishaSecured,

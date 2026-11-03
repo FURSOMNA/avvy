@@ -61,7 +61,6 @@ jobs:
             INFISICAL_CLIENT_ID=${{ vars.INFISICAL_CLIENT_ID }}
             INFISICAL_PROJECT_ID=${{ vars.INFISICAL_PROJECT_ID }}
             NUXT_PUBLIC_TURNSTILE_SITE_KEY=${{ vars.TURNSTILE_SITE_KEY }}
-            NUXT_FRONTOFFICE_OAUTH_DISCORD_CLIENT_ID=${{ vars.FO_DISCORD_CLIENT }}
             PLAYWRIGHT_TEST=${{ steps.config.outputs.playwright_test }}
           env_vars_update_strategy: overwrite
           secrets: |
