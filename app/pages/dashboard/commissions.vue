@@ -5,8 +5,8 @@ import type { CommissionStatusType } from '~~/shared/enums/Commissions';
 
 const tableSorting = ref([{ id: 'created_at', desc: true }]);
 const tablePage = ref(1);
-const filtersStatusValue = ref<CommissionStatusType | undefined>(undefined);
-const filtersStatusOptions = getAllCommissionStatusValues('SelectItem[]');
+const filtersStatusValue = ref<CommissionStatusType[]>([]);
+const filtersStatusOptions = getAllCommissionStatusValues('SelectItem[]').slice(1); // Using slice here to exclude "None" option
 const {
   data: commissions,
   refetch: refetchCommissions,
@@ -21,7 +21,7 @@ const {
         }
       : undefined,
     filters: {
-      status: filtersStatusValue.value
+      status: filtersStatusValue.value,
     }
   }),
 );
@@ -59,6 +59,7 @@ definePageMeta({
       <USelectMenu
         v-model="filtersStatusValue"
         :items="filtersStatusOptions"
+        multiple
         clear
         value-key="value"
         placeholder="Filter by status"

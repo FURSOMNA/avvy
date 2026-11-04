@@ -57,7 +57,7 @@ export type CommissionInsert = Omit<
 };
 export type CommissionFilterOptions = {
   customer?: string;
-  status?: CommissionStatusType | string;
+  status?: CommissionStatusType | string | (CommissionStatusType | string)[];
 };
 export type CommissionPaymentOptions = Pick<
   CommissionPayment,

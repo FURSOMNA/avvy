@@ -45,7 +45,11 @@ const getAll = async ({
   filters ||= {};
   const filterObject: Record<string, any> = {};
   if (filters.customer) filterObject.customer = new ObjectId(filters.customer);
-  if (filters.status) filterObject.status = filters.status;
+  if (Array.isArray(filters.status)) {
+    if (filters.status.length) filterObject.status = { $in: filters.status };
+  } else if (filters.status) {
+    filterObject.status = filters.status;
+  }
 
   // Prepare sort, default sort is created_at desc
   sort ||= { by: 'created_at', order: 1 };
