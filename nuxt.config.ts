@@ -13,10 +13,7 @@ export default defineNuxtConfig({
       { baseName: 'fonts', dir: 'assets/fonts' },
       { baseName: 'svg', dir: 'assets/svg' },
       { baseName: 'img', dir: 'assets/img' },
-    ],
-    rollupConfig: {
-      external: ['uncrypto', 'ofetch'],
-    },
+    ]
   },
   imports: { dirs: ['shared/enums'] },
   alias: {
