@@ -28,6 +28,7 @@ export const commissionsQuery = defineQueryOptions(
     },
     refetchOnWindowFocus: false,
     enabled: typeof document !== 'undefined',
+    staleTime: 0
   }),
 );
 

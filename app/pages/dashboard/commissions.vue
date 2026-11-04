@@ -21,7 +21,7 @@ const {
         }
       : undefined,
     filters: {
-      status: filtersStatusValue.value,
+      status: [...filtersStatusValue.value],
     }
   }),
 );
