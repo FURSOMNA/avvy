@@ -1,7 +1,7 @@
 # https://nuxtjs.org/deployments/google-cloud-run/
 # https://nuxt.com/docs/getting-started/deployment#nodejs-server
 # Build app
-FROM oven/bun:latest AS builder
+FROM oven/bun:1.4.4 AS builder
 
 WORKDIR /usr/src/app
 
@@ -23,11 +23,13 @@ ENV REVISION=${REVISION}
 RUN bun run build
 
 # Run entrypoint
-FROM oven/bun:latest
+FROM oven/bun:1.4.4
 
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/.output ./.output
+# Install sharp (and its platform-specific libvips) next to the traced output
+RUN cd .output/server && bun add sharp
 
 ENV HOST=0.0.0.0
 ENV PORT=8080
