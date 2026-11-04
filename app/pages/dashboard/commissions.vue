@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { BackofficeCommissionAddSlideover } from '#components';
 import { commissionsQuery } from '~/queries/commissions';
+import type { CommissionStatusType } from '~~/shared/enums/Commissions';
 
 const tableSorting = ref([{ id: 'created_at', desc: true }]);
 const tablePage = ref(1);
+const filtersStatusValue = ref<CommissionStatusType | undefined>(undefined);
+const filtersStatusOptions = getAllCommissionStatusValues('SelectItem[]');
 const {
   data: commissions,
   refetch: refetchCommissions,
@@ -17,6 +20,9 @@ const {
           order: tableSorting.value[0].desc ? -1 : 1,
         }
       : undefined,
+    filters: {
+      status: filtersStatusValue.value
+    }
   }),
 );
 // Overlays
@@ -49,6 +55,16 @@ definePageMeta({
 <template>
   <div class="space-y-4">
     <BackofficeHeaderActions :actions="actions" />
+    <div class="av_commissionfilters">
+      <USelectMenu
+        v-model="filtersStatusValue"
+        :items="filtersStatusOptions"
+        clear
+        value-key="value"
+        placeholder="Filter by status"
+        class="w-64"
+      />
+    </div>
     <div>
       <div v-if="asyncStatus === 'loading'" class="space-y-4">
         <USkeleton class="w-full h-12" v-for="_ in new Array(4)" :key="_" />

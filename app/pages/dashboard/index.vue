@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { statsQuery } from '~/queries/stats';
 
-definePageMeta({
-  title: 'Home',
-  keepalive: true,
-});
-
 const {
   data: stats,
   refetch: statsRefetch,
@@ -78,6 +73,11 @@ const formatedStats = computed(() => {
 });
 
 const session = useUserSession();
+
+definePageMeta({
+  title: 'Home',
+  keepalive: true,
+});
 </script>
 
 <template>

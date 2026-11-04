@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { agentAccountsQuery } from '~/queries/accounts';
 
-definePageMeta({
-  title: 'Accounts',
-  keepalive: true,
-});
-
 const toast = useToast();
 const { user } = useUserSession();
 const { data: accounts, refresh, asyncStatus } = useQuery(agentAccountsQuery());
@@ -76,6 +71,11 @@ const deleteAccount = async (id: string) => {
     });
   }
 };
+
+definePageMeta({
+  title: 'Accounts',
+  keepalive: true,
+});
 </script>
 
 <template>

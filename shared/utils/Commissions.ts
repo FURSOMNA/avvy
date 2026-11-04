@@ -1,8 +1,41 @@
+import type { SelectItem } from '@nuxt/ui';
 import * as z from 'zod';
 import {
   AvatarBaseFlagsType,
   CommissionStatusType,
 } from '../enums/Commissions';
+
+export function humanizeCommissionStatus(status: CommissionStatusType): string {
+  const statusMap: Record<CommissionStatusType, string> = {
+    [CommissionStatusType.None]: 'None',
+    [CommissionStatusType.Settled]: 'Settled',
+    [CommissionStatusType.Missing]: 'Missing',
+    [CommissionStatusType.Backlog]: 'Backlog',
+    [CommissionStatusType.InSetup]: 'In Setup',
+    [CommissionStatusType.NextUp]: 'Next Up',
+    [CommissionStatusType.InDevelopment]: 'In Development',
+    [CommissionStatusType.AwaitingResponse]: 'Awaiting Response',
+    [CommissionStatusType.Showtime]: 'Showtime',
+    [CommissionStatusType.Maintenance]: 'Maintenance',
+    [CommissionStatusType.Cancelled]: 'Cancelled',
+    [CommissionStatusType.PendingPayment]: 'Pending Payment',
+  };
+  return statusMap[status] || 'Unknown';
+}
+
+export function getAllCommissionStatusValues(
+  as: 'number[]' | 'SelectItem[]' = 'number[]',
+): number[] | SelectItem[] {
+  const statuses = Object.values(CommissionStatusType)
+    .filter((value) => typeof value === 'number')
+    .map((value) => value as CommissionStatusType);
+  if (as === 'SelectItem[]')
+    return statuses.map((value) => ({
+      label: humanizeCommissionStatus(value),
+      value,
+    })) as SelectItem[];
+  return statuses;
+}
 
 export const commissionChangelogSchema = z.object({
   date: z.string(),

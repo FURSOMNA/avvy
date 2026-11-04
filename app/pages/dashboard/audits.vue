@@ -42,9 +42,6 @@ const actions: PageAction[] = [
 
 definePageMeta({
   title: 'Audits',
-  description: 'View the audit logs of the system.',
-  middleware: 'agent-only',
-  layout: 'backoffice',
   keepalive: true,
 });
 </script>

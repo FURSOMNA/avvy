@@ -1,4 +1,5 @@
 import type { OptionalId, WithId, WithoutId } from 'mongodb';
+import type { CommissionStatusType } from '~~/shared/enums/Commissions';
 
 export type CommissionPaymentStatus =
   | 'pending'
