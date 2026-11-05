@@ -10,8 +10,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  console.log('Doctor check: Infisical available vars:', secretNames);
-
   // Check for environment variables and services
   const doctorCheck: AvvySetupDoctorCheckObject = {
     servicesHealth: {
