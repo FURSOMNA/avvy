@@ -6,7 +6,6 @@ import type { CommissionStatusType } from '~~/shared/enums/Commissions';
 const tableSorting = ref([{ id: 'created_at', desc: true }]);
 const tablePage = ref(1);
 const filtersStatusValue = ref<CommissionStatusType[]>([]);
-const filtersStatusOptions = getAllCommissionStatusValues('SelectItem[]').slice(1); // Using slice here to exclude "None" option
 const {
   data: commissions,
   refetch: refetchCommissions,
@@ -22,7 +21,7 @@ const {
       : undefined,
     filters: {
       status: [...filtersStatusValue.value],
-    }
+    },
   }),
 );
 // Overlays
@@ -55,37 +54,18 @@ definePageMeta({
 <template>
   <div class="space-y-4">
     <BackofficeHeaderActions :actions="actions" />
-    <div class="av_commissionfilters">
-      <USelectMenu
-        v-model="filtersStatusValue"
-        :items="filtersStatusOptions"
-        multiple
-        clear
-        value-key="value"
-        placeholder="Filter by status"
-        class="w-64"
+    <BackofficeCommissionTable
+      :commissions="commissions?.data ?? []"
+      :loading="asyncStatus === 'loading'"
+      v-model:sorting="tableSorting"
+      v-model:status-filter="filtersStatusValue"
+    />
+    <div v-if="commissions" class="flex justify-center">
+      <UPagination
+        v-model:page="tablePage"
+        :items-per-page="50"
+        :total="commissions.total"
       />
-    </div>
-    <div>
-      <div v-if="asyncStatus === 'loading'" class="space-y-4">
-        <USkeleton class="w-full h-12" v-for="_ in new Array(4)" :key="_" />
-      </div>
-      <div v-else-if="commissions?.data.length">
-        <BackofficeCommissionTable
-          :commissions="commissions.data"
-          v-model:sorting="tableSorting"
-        />
-      </div>
-      <div v-else-if="commissions && !commissions.data.length">
-        No commissions found!
-      </div>
-      <div v-if="commissions" class="flex justify-center">
-        <UPagination
-          v-model:page="tablePage"
-          :items-per-page="50"
-          :total="commissions.total"
-        />
-      </div>
     </div>
   </div>
 </template>

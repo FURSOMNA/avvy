@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import type { TableColumn, TableRow } from '@nuxt/ui';
+import type { SelectItem, TableColumn, TableRow } from '@nuxt/ui';
 import {
   BackofficeCommissionEditSlideover,
   SharedCommissionStatusBadge,
   UButton,
   UTooltip,
 } from '#components';
+import type { CommissionStatusType } from '~~/shared/enums/Commissions';
 
-defineProps<{
+const props = defineProps<{
   commissions: WithCustomer<DeserializedCommission>[];
+  loading: boolean;
 }>();
-const sorting = defineModel<{ id: string; desc: boolean }[]>({
+const sorting = defineModel<{ id: string; desc: boolean }[]>('sorting', {
   default: () => [{ id: 'created_at', desc: true }],
 });
+const statusFilter = defineModel<CommissionStatusType[]>('statusFilter', {
+  default: () => [],
+});
+const statusFilterOptions = getAllCommissionStatusValues('SelectItem[]').slice(
+  1,
+) as SelectItem[];
 
 // Overlays
 const overlay = useOverlay();
@@ -107,8 +115,15 @@ const columns: TableColumn<DeserializedCommissionWithCustomer>[] = [
     },
   },
   {
-    header: 'Status',
     accessorKey: 'status',
+    header: () =>
+      multiSelectFilterHeader(
+        h('span', 'Status'),
+        statusFilter.value,
+        (value) => (statusFilter.value = value),
+        'status',
+        statusFilterOptions,
+      ),
     cell: ({ row }) =>
       h(SharedCommissionStatusBadge, {
         status: row.original.status,
@@ -157,7 +172,15 @@ function onRowSelect(
   <UTable
     v-model:sorting="sorting"
     :columns="columns"
-    :data="commissions"
+    :data="props.commissions"
+    :loading="props.loading"
     @select="onRowSelect"
-  />
+  >
+    <template #loading>
+      <div class="space-y-3 p-4">
+        <USkeleton v-for="row in 4" :key="row" class="h-8 w-full" />
+      </div>
+    </template>
+    <template #empty>No commissions found!</template>
+  </UTable>
 </template>

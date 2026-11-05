@@ -1,6 +1,14 @@
+import type { SelectItem } from '@nuxt/ui';
 import type { Column } from '@tanstack/table-core';
 import type { VNode } from 'vue';
-import { UButton, UChip, UInput, UPopover, UTabs } from '#components';
+import {
+  UButton,
+  UChip,
+  UInput,
+  UPopover,
+  USelectMenu,
+  UTabs,
+} from '#components';
 
 function sortingHeader<T>(label: string, column: Column<T>) {
   const isSorted = column.getIsSorted();
@@ -76,10 +84,10 @@ function filterHeader(
                     size: 'xs',
                     ui: { list: 'w-full' },
                     color: {
-                      'none': 'neutral',
+                      none: 'neutral',
                       'has-value': 'success',
-                      'no-value': 'error'
-                    }[tabs.value] as 'neutral' | 'success' | 'error'
+                      'no-value': 'error',
+                    }[tabs.value] as 'neutral' | 'success' | 'error',
                   }),
                 ]
               : []),
@@ -89,4 +97,51 @@ function filterHeader(
   ]);
 }
 
-export { filterHeader, sortingHeader };
+function multiSelectFilterHeader<T extends string | number>(
+  title: VNode,
+  value: T[],
+  onUpdate: (value: T[]) => void,
+  label: string,
+  items: SelectItem[],
+) {
+  const isFiltered = value.length > 0;
+  return h('div', { class: 'inline-flex items-center gap-1' }, [
+    title,
+    h(
+      UPopover,
+      {},
+      {
+        default: () =>
+          h(
+            UChip,
+            { show: isFiltered, color: 'primary', size: 'sm' },
+            {
+              default: () =>
+                h(UButton, {
+                  icon: 'i-lucide-list-filter',
+                  color: 'neutral',
+                  variant: isFiltered ? 'subtle' : 'ghost',
+                  size: 'sm',
+                  'aria-label': `Filter by ${label}`,
+                }),
+            },
+          ),
+        content: () =>
+          h('div', { class: 'w-64 p-2' }, [
+            h(USelectMenu, {
+              modelValue: value,
+              items,
+              multiple: true,
+              clear: true,
+              valueKey: 'value',
+              placeholder: `Filter by ${label}`,
+              'onUpdate:modelValue': onUpdate,
+              class: 'w-full'
+            }),
+          ]),
+      },
+    ),
+  ]);
+}
+
+export { filterHeader, multiSelectFilterHeader, sortingHeader };
