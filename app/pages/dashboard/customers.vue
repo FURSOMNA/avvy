@@ -98,24 +98,24 @@ definePageMeta({
 <template>
   <div class="space-y-4">
     <BackofficeHeaderActions :actions="actions" />
-    <div class="flex flex-wrap gap-2">
+    <div class="flex gap-2">
       <UInput
         v-model="searchInputs.name"
         placeholder="Search name"
         icon="i-lucide-search"
-        class="w-full sm:w-64"
+        class="w-64"
       />
       <UInput
         v-model="searchInputs.discordId"
         placeholder="Search Discord ID"
         icon="i-lucide-search"
-        class="w-full sm:w-64"
+        class="w-64"
       />
       <UInput
         v-model="searchInputs.vrcId"
         placeholder="Search VRChat ID"
         icon="i-lucide-search"
-        class="w-full sm:w-64"
+        class="w-64"
       />
     </div>
     <div v-if="asyncStatus === 'loading'" class="space-y-4">
