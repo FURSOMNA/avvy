@@ -6,12 +6,7 @@ const toast = useToast();
 const overlay = useOverlay();
 const tableSorting = ref([{ id: 'created_at', desc: true }]);
 const tablePage = ref(1);
-const searchInputs = reactive({ name: '', discordId: '', vrcId: '' });
-const search = reactive<{
-  name?: string;
-  discordId?: string;
-  vrcId?: string;
-}>({});
+const search = ref<Partial<CustomerFilterOptions>>({});
 const {
   data: customers,
   refresh,
@@ -20,11 +15,7 @@ const {
 } = useQuery(() =>
   customersQuery({
     page: tablePage.value,
-    filters: {
-      name: search.name,
-      discord_id: search.discordId,
-      vrc_id: search.vrcId,
-    },
+    filters: search.value,
     sorting: tableSorting.value[0]
       ? {
           by: tableSorting.value[0].id,
@@ -50,15 +41,6 @@ watch(
   },
   { immediate: true, deep: true },
 );
-
-watch(searchInputs, (inputs, _oldValue, onCleanup) => {
-  const timeout = setTimeout(() => {
-    search.name = inputs.name.trim() || undefined;
-    search.discordId = inputs.discordId.trim() || undefined;
-    search.vrcId = inputs.vrcId.trim() || undefined;
-  }, 500);
-  onCleanup(() => clearTimeout(timeout));
-});
 
 watch(
   search,
@@ -98,44 +80,26 @@ definePageMeta({
 <template>
   <div class="space-y-4">
     <BackofficeHeaderActions :actions="actions" />
-    <div class="flex gap-2">
-      <UInput
-        v-model="searchInputs.name"
-        placeholder="Search name"
-        icon="i-lucide-search"
-        class="w-64"
-      />
-      <UInput
-        v-model="searchInputs.discordId"
-        placeholder="Search Discord ID"
-        icon="i-lucide-search"
-        class="w-64"
-      />
-      <UInput
-        v-model="searchInputs.vrcId"
-        placeholder="Search VRChat ID"
-        icon="i-lucide-search"
-        class="w-64"
-      />
-    </div>
-    <div v-if="asyncStatus === 'loading'" class="space-y-4">
-      <USkeleton class="w-full h-12" v-for="_ in new Array(4)" :key="_" />
-    </div>
-    <div v-else-if="customers?.data.length">
-      <BackofficeCustomerTable
-        :customers="customers.data"
-        v-model:sorting="tableSorting"
-      />
-    </div>
-    <div v-else-if="customers && !customers.data.length">
-      No customers found!
-    </div>
-    <div v-if="customers" class="flex justify-center">
-      <UPagination
-        v-model:page="tablePage"
-        :items-per-page="20"
-        :total="customers.total"
-      />
+    <BackofficeCustomerTable
+      :customers="customers?.data ?? []"
+      :loading="asyncStatus === 'loading'"
+      v-model:sorting="tableSorting"
+      v-model:filters="search"
+    />
+    <div v-if="customers" class="flex justify-between">
+      <span
+        class="inline-flex items-center gap-1 text-sm text-muted border border-muted py-1 px-2 rounded-lg pointer-events-none"
+      >
+        <UIcon name="i-lucide-user-round" size="sm" />
+        {{ customers.total }}
+      </span>
+      <div>
+        <UPagination
+          v-model:page="tablePage"
+          :items-per-page="20"
+          :total="customers.total"
+        />
+      </div>
     </div>
   </div>
 </template>

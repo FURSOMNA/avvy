@@ -41,7 +41,6 @@ export const useCustomerFormStore = defineStore('customerForm', () => {
     async onSuccess() {
       await queryCache.invalidateQueries({ key: ['customers'] });
       useOverlay().closeAll();
-      toast.add({ description: 'Customer saved.' });
     },
   });
 
@@ -56,7 +55,6 @@ export const useCustomerFormStore = defineStore('customerForm', () => {
     async onSuccess() {
       await queryCache.invalidateQueries({ key: ['customers'] });
       useOverlay().closeAll();
-      toast.add({ description: 'Customer created.' });
     },
   });
 
@@ -66,7 +64,6 @@ export const useCustomerFormStore = defineStore('customerForm', () => {
     onSuccess() {
       queryCache.invalidateQueries({ key: ['customers'] });
       useOverlay().closeAll();
-      toast.add({ description: 'Customer deleted.' });
     },
     onError(error: Error) {
       const errorMessage =

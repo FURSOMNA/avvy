@@ -20,18 +20,23 @@ const getAll = async ({
   // Prepare filters
   filters ||= {};
   const filterObject: Record<string, any> = {};
+  const idFilter = (id: string | undefined, hasId: boolean | undefined) => ({
+    ...(id ? { $regex: new RegExp(_.escapeRegExp(id), 'i') } : {}),
+    ...(hasId === true
+      ? { $exists: true, $nin: [null, ''] }
+      : hasId === false
+        ? { $in: [null, ''] }
+        : {}),
+  });
   if (filters.name)
     filterObject.name = {
       $regex: new RegExp(_.escapeRegExp(filters.name), 'i'),
     };
-  if (filters.vrc_id)
-    filterObject.vrc_id = {
-      $regex: new RegExp(_.escapeRegExp(filters.vrc_id), 'i'),
-    };
-  if (filters.discord_id)
-    filterObject.discord_id = {
-      $regex: new RegExp(_.escapeRegExp(filters.discord_id), 'i'),
-    };
+  const vrcIdFilter = idFilter(filters.vrc_id, filters.has_vrchat_id);
+  if (Object.keys(vrcIdFilter).length) filterObject.vrc_id = vrcIdFilter;
+  const discordIdFilter = idFilter(filters.discord_id, filters.has_discord_id);
+  if (Object.keys(discordIdFilter).length)
+    filterObject.discord_id = discordIdFilter;
   if (filters.note)
     filterObject.note = {
       $regex: new RegExp(_.escapeRegExp(filters.note), 'i'),
@@ -74,6 +79,12 @@ const getAll = async ({
       $addFields: {
         commission_count: {
           $ifNull: [{ $arrayElemAt: ['$commission_count_result.count', 0] }, 0],
+        },
+        has_discord_id: {
+          $ne: [{ $ifNull: ['$discord_id', ''] }, ''],
+        },
+        has_vrchat_id: {
+          $ne: [{ $ifNull: ['$vrc_id', ''] }, ''],
         },
       },
     },

@@ -28,11 +28,15 @@ export type CustomerFilterOptions = {
   discord_id?: string;
   vrc_id?: string;
   note?: string;
+  has_discord_id?: boolean;
+  has_vrchat_id?: boolean;
 };
 
 export type DeserializedCustomer = Deserialized<WithId<Customer>>;
 export type DeserializedCustomerListItem = DeserializedCustomer & {
   readonly commission_count: number;
+  readonly has_discord_id: boolean;
+  readonly has_vrchat_id: boolean;
 };
 
 export type WithCustomer<T> = T & { customer: Customer };

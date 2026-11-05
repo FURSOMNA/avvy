@@ -12,6 +12,14 @@ export default defineEventHandler(async (event) => {
     vrc_id: queryFiltersObject.vrc_id
       ? String(queryFiltersObject.vrc_id)
       : undefined,
+    has_discord_id:
+      typeof queryFiltersObject.has_discord_id === 'boolean'
+        ? queryFiltersObject.has_discord_id
+        : undefined,
+    has_vrchat_id:
+      typeof queryFiltersObject.has_vrchat_id === 'boolean'
+        ? queryFiltersObject.has_vrchat_id
+        : undefined,
   };
   sort_by ||= 'created_at';
   sort_order =
