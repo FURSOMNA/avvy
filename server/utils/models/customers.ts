@@ -59,6 +59,25 @@ const getAll = async ({
     { $sort: sortStage },
     { $skip: skip },
     { $limit: pageSize },
+    {
+      $lookup: {
+        from: 'commissions',
+        let: { customerId: '$_id' },
+        pipeline: [
+          { $match: { $expr: { $eq: ['$customer', '$$customerId'] } } },
+          { $count: 'count' },
+        ],
+        as: 'commission_count_result',
+      },
+    },
+    {
+      $addFields: {
+        commission_count: {
+          $ifNull: [{ $arrayElemAt: ['$commission_count_result.count', 0] }, 0],
+        },
+      },
+    },
+    { $project: { commission_count_result: 0 } },
   ];
 
   // Prepare separate pipeline for count

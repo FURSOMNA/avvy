@@ -31,6 +31,9 @@ export type CustomerFilterOptions = {
 };
 
 export type DeserializedCustomer = Deserialized<WithId<Customer>>;
+export type DeserializedCustomerListItem = DeserializedCustomer & {
+  readonly commission_count: number;
+};
 
 export type WithCustomer<T> = T & { customer: Customer };
 export type WithExistingCustomer<T> = T & { customer: DeserializedCustomer };

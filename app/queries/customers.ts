@@ -5,7 +5,10 @@ type CustomerQueryParams = {
   page?: number;
   sorting?: { by: string; order: number };
 };
-type CustomersResponse = { data: DeserializedCustomer[]; total: number };
+type CustomersResponse = {
+  data: DeserializedCustomerListItem[];
+  total: number;
+};
 
 export const customersQuery = defineQueryOptions(
   ({

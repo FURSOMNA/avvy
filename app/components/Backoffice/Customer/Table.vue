@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { BackofficeCustomerEditSlideover } from '#components';
 
 const props = defineProps<{
-  customers: DeserializedCustomer[];
+  customers: DeserializedCustomerListItem[];
 }>();
 const sorting = defineModel<{ id: string; desc: boolean }[]>('sorting', {
   default: () => [{ id: 'created_at', desc: true }],
@@ -16,7 +16,7 @@ const clipboard = useClipboard();
 const toast = useToast();
 const contextMenuItems = ref<ContextMenuItem[]>([]);
 
-function handleEditCustomer(customer: DeserializedCustomer) {
+function handleEditCustomer(customer: DeserializedCustomerListItem) {
   _.assign(
     customerFormStore.formState,
     _.pick(customer, Object.keys(customerFormStore.schema.shape)),
@@ -29,7 +29,7 @@ function handleEditCustomer(customer: DeserializedCustomer) {
     .open();
 }
 
-const columns: TableColumn<DeserializedCustomer>[] = [
+const columns: TableColumn<DeserializedCustomerListItem>[] = [
   {
     accessorKey: 'name',
     sortingFn: 'alphanumeric',
@@ -38,6 +38,10 @@ const columns: TableColumn<DeserializedCustomer>[] = [
   {
     accessorKey: 'socials',
     header: 'Socials',
+  },
+  {
+    accessorKey: 'commission_count',
+    header: 'Commissions',
   },
   {
     accessorKey: 'created_at',
@@ -51,11 +55,17 @@ const columns: TableColumn<DeserializedCustomer>[] = [
   },
 ];
 
-function onRowSelect(_event: Event, row: TableRow<DeserializedCustomer>) {
+function onRowSelect(
+  _event: Event,
+  row: TableRow<DeserializedCustomerListItem>,
+) {
   handleEditCustomer(row.original);
 }
 
-function onRowContextMenu(_event: Event, row: TableRow<DeserializedCustomer>) {
+function onRowContextMenu(
+  _event: Event,
+  row: TableRow<DeserializedCustomerListItem>,
+) {
   const customer = row.original;
   contextMenuItems.value = [
     {
