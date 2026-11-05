@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 type CustomerQueryParams = {
-  name?: string;
+  filters?: Partial<CustomerFilterOptions>;
   page?: number;
   sorting?: { by: string; order: number };
 };
@@ -9,17 +9,17 @@ type CustomersResponse = { data: DeserializedCustomer[]; total: number };
 
 export const customersQuery = defineQueryOptions(
   ({
-    name,
+    filters = {},
     page = 1,
     sorting = { by: 'created_at', order: -1 },
   }: CustomerQueryParams) => ({
-    key: ['customers', { name, page, sorting }],
+    key: ['customers', { filters, page, sorting }],
     query: () => {
       const queryObject = {
-        name,
         page,
         sort_by: sorting.by,
         sort_order: sorting.order,
+        filters: JSON.stringify(filters),
       };
       // Delete undefined properties from the query object with lodash
       const cleanedQueryObject = _.omitBy(
@@ -37,9 +37,9 @@ export const customersQuery = defineQueryOptions(
 
 export const customerFilterQuery = defineQueryOptions(
   ({ name, page = 1 }: { name?: string; page?: number }) => ({
-    key: ['customers', { name, page }],
+    key: ['customers', { filters: { name }, page }],
     query: () => {
-      const queryObject = { name, page };
+      const queryObject = { filters: JSON.stringify({ name }), page };
       // Delete undefined properties from the query object with lodash
       const cleanedQueryObject = _.omitBy(
         queryObject,

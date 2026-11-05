@@ -2,9 +2,16 @@ export default defineEventHandler(async (event) => {
   // Verify if current session user has permissions to read customers.
   await hasPermission(event, 'read:customers', true);
   // Set objects and parameters for the request.
-  let { page, name, sort_by, sort_order } = getQuery(event);
+  let { page, filters: queryFilters, sort_by, sort_order } = getQuery(event);
+  const queryFiltersObject = JSON.parse(String(queryFilters || '{}'));
   const filters: Partial<CustomerFilterOptions> = {
-    name: name ? String(name) : undefined,
+    name: queryFiltersObject.name ? String(queryFiltersObject.name) : undefined,
+    discord_id: queryFiltersObject.discord_id
+      ? String(queryFiltersObject.discord_id)
+      : undefined,
+    vrc_id: queryFiltersObject.vrc_id
+      ? String(queryFiltersObject.vrc_id)
+      : undefined,
   };
   sort_by ||= 'created_at';
   sort_order =

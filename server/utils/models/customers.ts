@@ -28,6 +28,10 @@ const getAll = async ({
     filterObject.vrc_id = {
       $regex: new RegExp(_.escapeRegExp(filters.vrc_id), 'i'),
     };
+  if (filters.discord_id)
+    filterObject.discord_id = {
+      $regex: new RegExp(_.escapeRegExp(filters.discord_id), 'i'),
+    };
   if (filters.note)
     filterObject.note = {
       $regex: new RegExp(_.escapeRegExp(filters.note), 'i'),
