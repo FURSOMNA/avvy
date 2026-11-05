@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-:root {
-  --ui-radius: 0.375rem;
+:root:root {
+  --ui-radius: .375rem;
 }
 
 @theme static {
