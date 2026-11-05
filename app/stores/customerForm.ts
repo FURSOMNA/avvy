@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { defineStore } from 'pinia';
 import type z from 'zod';
 
-const schema = customerOptionsSchema;
+const schema = markRaw(customerOptionsSchema);
 type Schema = z.output<typeof customerOptionsSchema>;
 type AdditionalState = {
   id: string | null;
