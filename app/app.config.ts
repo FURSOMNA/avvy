@@ -12,7 +12,7 @@ export default defineAppConfig({
     button: {
       slots: {
         base: [
-          'rounded-full cursor-pointer sm:active:scale-95 duration-[0.15s,0.3s] transition-transform ease-expo',
+          'cursor-pointer sm:active:scale-95 duration-[0.15s,0.3s] transition-transform ease-expo',
         ],
       },
       compoundVariants: [
@@ -31,7 +31,7 @@ export default defineAppConfig({
       variants: {
         size: {
           md: {
-            base: 'px-4 sm:px-3 gap-2 sm:gap-1.5 text-base sm:text-sm font-bold sm:font-normal py-2.5 sm:py-1.5',
+            base: 'text-base sm:text-sm font-bold sm:font-normal',
           },
         },
       },
@@ -48,15 +48,6 @@ export default defineAppConfig({
             thumb:
               'size-5 sm:size-4 data-[state=checked]:translate-x-5 sm:data-[state=checked]:translate-x-4',
             wrapper: 'text-base sm:text-sm',
-          },
-        },
-      },
-    },
-    input: {
-      variants: {
-        size: {
-          md: {
-            base: 'px-4 sm:px-2.5 py-2.5 sm:py-1.5 gap-2 text-base sm:text-sm',
           },
         },
       },
