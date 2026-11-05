@@ -2,6 +2,7 @@
 import type { DropdownMenuItem, NavigationMenuItem } from '@nuxt/ui';
 
 const { clear, session, user } = useUserSession();
+const isDev = import.meta.dev;
 
 const links: NavigationMenuItem[] = [
   {
@@ -65,7 +66,12 @@ const userDropdownItems: DropdownMenuItem[] = [
 <template>
   <USidebar :ui="{ inner: 'bg-elevated/25' }">
     <template #header>
-      <HeaderLogo />
+      <div class="flex flex-col items-center justify-center gap-2 w-full py-2">
+        <HeaderLogo />
+        <UBadge v-if="isDev" color="warning" variant="subtle" size="sm" class="flex-1">
+          Local Build
+        </UBadge>
+      </div>
     </template>
     <template #default>
       <UNavigationMenu
